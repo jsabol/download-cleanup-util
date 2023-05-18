@@ -12,6 +12,9 @@ devDependencies:
   cli-spinners:
     specifier: ^2.9.0
     version: 2.9.0
+  dotenv:
+    specifier: ^16.0.3
+    version: 16.0.3
   log-update:
     specifier: ^5.0.1
     version: 5.0.1
@@ -24,6 +27,9 @@ devDependencies:
   sharp:
     specifier: ^0.32.1
     version: 0.32.1
+  tree-kill:
+    specifier: ^1.2.2
+    version: 1.2.2
   tsup:
     specifier: ^6.7.0
     version: 6.7.0
@@ -529,6 +535,11 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       path-type: 4.0.0
+    dev: true
+
+  /dotenv@16.0.3:
+    resolution: {integrity: sha512-7GO6HghkA5fYG9TYnNxi14/7K9f5occMlp3zXAuSxn7CKCxt9xbNWG7yF8hTCSUchlfWSe3uLmlPfigevRItzQ==}
+    engines: {node: '>=12'}
     dev: true
 
   /eastasianwidth@0.2.0:

@@ -1,3 +1,8 @@
+patreon-downloader
+.local-chromium
+chromedata
+.vscode/settings.json
+
 # Logs
 logs
 *.log

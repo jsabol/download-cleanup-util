@@ -3,16 +3,15 @@ import logUpdate from "log-update";
 import cliSpinner from "cli-spinners";
 import chalk from "chalk";
 import * as fs from "utils/fs-util";
+import path from "path";
 
 class Logger {
-  logFilePath: string;
   logQueue: string[];
   writing: boolean;
   frame: number;
   frameArr: string[];
 
   constructor() {
-    this.logFilePath = "./logs/" + cleanFilename(process.env.LOGFILE + ".log");
     this.logQueue = [];
     this.writing = false;
     this.frame = 0;
@@ -24,13 +23,18 @@ class Logger {
       return;
     }
     this.writing = true;
-    const toWrite = this.logQueue.join("\n");
+    const toWrite = this.logQueue.join("\n") + "\n";
     this.logQueue = [];
-    await fs.appendFile(this.logFilePath, toWrite);
+
+    await fs.appendFile(this.getLogFilePath(), toWrite);
 
     if (this.logQueue.length > 0) {
       await this.writeLog();
     }
+  }
+
+  getLogFilePath() {
+    return path.join(process.cwd(), "logs", cleanFilename(`log-${process.env.LOGFILE}.txt`));
   }
 
   addToQueue(message: string) {
@@ -39,7 +43,7 @@ class Logger {
   }
 
   async clearFile() {
-    await fs.writeFile(this.logFilePath, "");
+    await fs.writeFile(this.getLogFilePath(), "");
   }
 
   out(...messages: string[]) {

@@ -28,11 +28,17 @@ export async function mkdir(directoryPath: string, errContext = "error"): Promis
 }
 
 // Write a file asynchronously, checking if it's parent directory exists and making it if needed
-export async function writeFile(filePath: string, data: string): Promise<void | Error> {
-  const parentDirectory = filePath.replace(/\/[^/]*$/, ""); // Extract parent directory path
-  const r = await mkdir(parentDirectory);
-  if (r instanceof Error) return r;
-  await fs.promises.writeFile(filePath, data);
+export async function writeFile(
+  filePath: string,
+  data: string,
+  errContext = "error"
+): Promise<void | Error> {
+  return catchError<void | Error>(async () => {
+    const parentDirectory = path.dirname(filePath);
+    const r = await mkdir(parentDirectory);
+    if (r instanceof Error) return r;
+    await fs.promises.writeFile(filePath, data);
+  }, errContext);
 }
 
 export async function readJSONFile(filePath: string, errContext = "error") {
